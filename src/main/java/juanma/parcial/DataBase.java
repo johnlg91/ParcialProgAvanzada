@@ -26,11 +26,20 @@ public class DataBase {
 
     //para cargar del disco
     public void loadData(File dataDirectory) {
-        loadProductos(new File(dataDirectory, "productos.txt"));
-        loadDepositos(new File(dataDirectory, "depositos.txt"));
-        // load tiendas
-        // load stock
-        // load usuarios
+        Thread[] threads = {
+            new Thread(() -> loadProductos(new File(dataDirectory, "productos.txt"))),
+            new Thread(() -> loadDepositos(new File(dataDirectory, "depositos.txt")))
+                    // load tiendas
+                    // load stock
+                    // load usuarios
+        };
+        for (Thread t : threads) t.start();
+        for (Thread t : threads) {
+            try {
+                t.join();
+            } catch (InterruptedException ignore) {
+            }
+        }
     }
 
     //para grabar al disco
