@@ -13,6 +13,10 @@ import static org.junit.Assert.assertEquals;
 
 
 public class TestPersistence {
+    static {
+        //noinspection ResultOfMethodCallIgnored
+        new File("test").mkdir();
+    }
 
     @Test
     public void testBinaryPersistence() {
