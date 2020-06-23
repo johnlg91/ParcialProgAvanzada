@@ -75,7 +75,7 @@ public class DataBase {
 
     private static final DataBase INSTANCE = new DataBase();
 
-    public DataBase getInstance() {
+    public static DataBase getInstance() {
         return INSTANCE;
     }
 
