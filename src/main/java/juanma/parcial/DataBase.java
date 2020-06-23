@@ -153,5 +153,8 @@ public class DataBase {
         return depositos.get(id);
     }
 
+    public void add(Producto producto) {
+        productos.put(producto.getSku(), producto);
+    }
 }
 

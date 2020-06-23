@@ -2,6 +2,7 @@ package juanma.parcial.objetos;
 
 import java.io.Serializable;
 
+@SuppressWarnings("FieldMayBeFinal")
 public class Producto implements Serializable{
 
     private String sku; //codigo ID
@@ -19,6 +20,17 @@ public class Producto implements Serializable{
         this.descripcion = descripcion;
         this.precio = precio;
     }
+
+
+    public String getSku() {
+        return sku;
+    }
+
+    public String getNombre() { return nombre; }
+
+    public String getDescripcion() { return descripcion; }
+
+    public double getPrecio() { return precio; }
 
     @Override
     public String toString() {
@@ -45,7 +57,4 @@ public class Producto implements Serializable{
         return sku.hashCode();
     }
 
-    public String getSku() {
-        return sku;
-    }
 }

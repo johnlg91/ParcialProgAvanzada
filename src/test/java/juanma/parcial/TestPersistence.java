@@ -75,11 +75,19 @@ public class TestPersistence {
     }
 
     @Test
-    public void testLoadData() {
+    public void testDataBase() {
         createProductos();
         DataBase db = DataBase.getInstance();
-        db.loadData(new File("test"));
+        File directory = new File("test");
+        db.loadData(directory);
         assertEquals("1A", db.getProducto("1A").getSku());
         assertEquals(CABA, db.getDeposito("B").getProvincia());
+
+        
+        db.add(new Producto("XX", "XBOX", "La ultima Xbox", 1000));
+        db.saveData(directory);
+        db.loadData(directory);
+
+        assertEquals("XBOX", db.getProducto("XX").getNombre());
     }
 }
