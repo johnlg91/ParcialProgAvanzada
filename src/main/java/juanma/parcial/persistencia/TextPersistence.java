@@ -1,5 +1,7 @@
 package juanma.parcial.persistencia;
 
+import juanma.parcial.objetos.Provincia;
+
 import java.io.*;
 import java.lang.reflect.Field;
 import java.util.*;
