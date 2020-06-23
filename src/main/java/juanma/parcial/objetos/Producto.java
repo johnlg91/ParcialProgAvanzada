@@ -46,6 +46,6 @@ public class Producto implements Serializable{
     }
 
     public String getSku() {
-        return sku
+        return sku;
     }
 }

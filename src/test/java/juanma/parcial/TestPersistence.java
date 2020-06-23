@@ -5,6 +5,7 @@ import juanma.parcial.persistencia.TextPersistence;
 import juanma.parcial.objetos.Producto;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,11 @@ public class TestPersistence {
 
     @Test
     public void testBinaryPersistence() {
+        File file  = new File("test/Productos.bin");
         ArrayList<Producto> productos = new ArrayList<>();
         productos.add(new Producto("1A", "ventilador", "", 2.0));
-        BinaryPersistence.writeElements(productos, "Productos.bytes");
-        List<Producto> readProductos = BinaryPersistence.readElements("Productos.bytes");
+        BinaryPersistence.writeElements(file, productos);
+        List<Producto> readProductos = BinaryPersistence.readElements(file);
         assertEquals(productos.size(), readProductos.size());
         for (int i = 0; i < productos.size(); i++) {
             assertEquals(productos.get(i), readProductos.get(i));
@@ -28,11 +30,12 @@ public class TestPersistence {
 
     @Test
     public void testTextPersistence() {
+        File file  = new File("test/Productos.txt");
         ArrayList<Producto> productos = new ArrayList<>();
         productos.add(new Producto("1A", "ventilador", "", 2.0));
         productos.add(new Producto("TV1A", "televisor", "", 5.0));
-        TextPersistence.writeElements("Productos.txt", productos);
-        List<Producto> readProductos = TextPersistence.readElements("Productos.txt");
+        TextPersistence.writeElements(file, productos);
+        List<Producto> readProductos = TextPersistence.readElements(file);
         assertEquals(productos.size(), readProductos.size());
         for (int i = 0; i < productos.size(); i++) {
             assertEquals(productos.get(i), readProductos.get(i));
