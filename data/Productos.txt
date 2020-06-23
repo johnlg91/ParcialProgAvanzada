@@ -1,0 +1,13 @@
+2
+juanma.parcial.objetos.Producto
+=========
+sku:1A
+nombre:ventilador
+descripcion:
+precio:2.0
+=========
+sku:TV1A
+nombre:televisor
+descripcion:
+precio:5.0
+=========
