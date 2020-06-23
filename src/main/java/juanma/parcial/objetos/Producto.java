@@ -44,4 +44,8 @@ public class Producto implements Serializable{
     public int hashCode() {
         return sku.hashCode();
     }
+
+    public String getSku() {
+        return sku
+    }
 }

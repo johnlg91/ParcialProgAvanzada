@@ -31,7 +31,7 @@ public class TestPersistence {
         ArrayList<Producto> productos = new ArrayList<>();
         productos.add(new Producto("1A", "ventilador", "", 2.0));
         productos.add(new Producto("TV1A", "televisor", "", 5.0));
-        TextPersistence.writeElements(productos, "Productos.txt");
+        TextPersistence.writeElements("Productos.txt", productos);
         List<Producto> readProductos = TextPersistence.readElements("Productos.txt");
         assertEquals(productos.size(), readProductos.size());
         for (int i = 0; i < productos.size(); i++) {

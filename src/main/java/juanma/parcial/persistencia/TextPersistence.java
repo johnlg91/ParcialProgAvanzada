@@ -1,10 +1,12 @@
 package juanma.parcial.persistencia;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -15,9 +17,9 @@ public class TextPersistence {
 
     public static final String SEPARATOR = "=========";
 
-    static public <T> void writeElements(List<T> elements, String fileName) {
+    static public <T> void writeElements(File file, List<T> elements) {
         try (
-                PrintWriter writer = new PrintWriter(fileName) //declaro el writer y le paso el file
+                PrintWriter writer = new PrintWriter(file) //declaro el writer y le paso el file
         ) {
             writer.println(elements.size());
             if (elements.size() == 0) return;
@@ -35,14 +37,14 @@ public class TextPersistence {
             }
 
         } catch (Exception e) {
-            throw new WriteFailedException(fileName, e);
+            throw new WriteFailedException(file.getAbsolutePath(), e);
 
         }
 
     }
 
-    static public <T> List<T> readElements(String fileName) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    static public <T> List<T> readElements(File file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             int n = parseInt(reader.readLine());
             if (n == 0) return emptyList();
 
@@ -57,7 +59,7 @@ public class TextPersistence {
             return list;
 
         } catch (Exception e) {
-            throw new ReadFailedException(fileName, e);
+            throw new ReadFailedException(file.getAbsolutePath(), e);
         }
     }
 
@@ -81,6 +83,7 @@ public class TextPersistence {
             field.setDouble(element, Double.parseDouble(fieldValue));
         else if (type == Integer.TYPE)
             field.setDouble(element, Integer.parseInt(fieldValue));
+
         else field.set(element, fieldValue);
     }
 

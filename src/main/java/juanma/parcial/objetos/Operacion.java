@@ -6,4 +6,6 @@ public class Operacion {
 
     private Usuario usuario;
     private LocalDate fecha;
+    private Ubicacion orijen;
+    private Ubicacion destino;
 }
