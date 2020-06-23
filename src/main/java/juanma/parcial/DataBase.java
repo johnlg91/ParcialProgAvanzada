@@ -2,6 +2,7 @@ package juanma.parcial;
 
 
 import juanma.parcial.objetos.*;
+import juanma.parcial.persistencia.BinaryPersistence;
 import juanma.parcial.persistencia.TextPersistence;
 
 import java.io.File;
@@ -14,7 +15,7 @@ public class DataBase {
 
     //mapas y listas donde se guardan los datos
     //los mapas se guardan con un ID del objeto como key
-    private List<Operacion> historial;
+    private List<Operacion> historial = new ArrayList<>();
     private final SortedMap<String, Producto> productos = new TreeMap<>();
     private final SortedMap<String, Deposito> depositos = new TreeMap<>();
     private final SortedMap<String, Tienda> tiendas = new TreeMap<>();
@@ -29,7 +30,7 @@ public class DataBase {
     private static final String FILE_STOCK = "stock.txt";
     private static final String FILE_USUARIOS = "usuarios.txt";
     private static final String FILE_TIENDAS = "tiendas.txt";
-    private static final String FILE_HISTORIAL = "historial.txt";
+    private static final String FILE_HISTORIAL = "historial.bin";
 
     private static final DataBase INSTANCE = new DataBase(); //instancia
 
@@ -111,7 +112,7 @@ public class DataBase {
     }
 
     private void loadHistorial(File file) {
-        historial.addAll(TextPersistence.readElements(new File(file, FILE_HISTORIAL)));
+        historial.addAll(BinaryPersistence.readElements(new File(file, FILE_HISTORIAL)));
     }
 
 
@@ -139,7 +140,7 @@ public class DataBase {
     }
 
     private void saveHistorial(File dataDirectory) {
-        TextPersistence.writeElements(new File(dataDirectory, FILE_HISTORIAL), historial);
+        BinaryPersistence.writeElements(new File(dataDirectory, FILE_HISTORIAL), historial);
     }
 
 
@@ -155,6 +156,14 @@ public class DataBase {
 
     public void add(Producto producto) {
         productos.put(producto.getSku(), producto);
+    }
+
+    public void add(Operacion op) {
+        historial.add(op);
+    }
+
+    public Stock getStock(Ubicacion ubicacion, Producto producto) {
+        return stock.get( ubicacion.getId() + ':' + producto.getSku());
     }
 }
 

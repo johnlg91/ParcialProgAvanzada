@@ -1,6 +1,10 @@
 package juanma.parcial.persistencia;
 
+import juanma.parcial.exceptions.ReadFailedException;
+import juanma.parcial.exceptions.WriteFailedException;
+
 import java.io.*;
+import java.util.Collections;
 import java.util.List;
 
 public class BinaryPersistence {
@@ -23,8 +27,11 @@ public class BinaryPersistence {
                 ObjectInputStream datos = new ObjectInputStream(in);
         ) {
             return (List<T>) datos.readObject();
-
-        } catch (IOException | ClassNotFoundException e) {
+        }
+        catch (FileNotFoundException f) {
+            return Collections.emptyList();
+        }
+        catch (IOException | ClassNotFoundException e) {
             throw new ReadFailedException(file.getAbsolutePath(), e);
         }
     }

@@ -1,4 +1,4 @@
-package juanma.parcial.persistencia;
+package juanma.parcial.exceptions;
 
 public class WriteFailedException extends RuntimeException {
     public WriteFailedException(String fileName, Exception e) {

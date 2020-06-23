@@ -1,4 +1,4 @@
-package juanma.parcial.persistencia;
+package juanma.parcial.exceptions;
 
 public class ReadFailedException extends RuntimeException {
     public ReadFailedException(String fileName, Exception e) {

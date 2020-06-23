@@ -1,10 +1,14 @@
 package juanma.parcial.persistencia;
 
-import juanma.parcial.objetos.Provincia;
+import juanma.parcial.exceptions.ReadFailedException;
+import juanma.parcial.exceptions.WriteFailedException;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Collections.emptyList;
@@ -66,11 +70,9 @@ public class TextPersistence {
                 list.add(readElement(clase, reader));
             }
             return list;
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             return emptyList();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new ReadFailedException(file.getAbsolutePath(), e);
         }
     }
@@ -88,6 +90,7 @@ public class TextPersistence {
         return element;
     }
 
+    @SuppressWarnings("rawtypes")
     private static <T> void setFieldValue(T element, String fieldValue, Field field) throws Exception {
         Class<?> type = field.getType();
         if (type == Double.TYPE)
@@ -95,10 +98,8 @@ public class TextPersistence {
         else if (type == Integer.TYPE)
             field.setDouble(element, Integer.parseInt(fieldValue));
         else if (type.isEnum()) {
-            for (Object e : type.getEnumConstants())
-                if (fieldValue.equals(e.toString())) field.set(element, e);
-        }
-        else field.set(element, fieldValue);
+            field.set(element, Enum.valueOf((Class<Enum>) type, fieldValue));
+        } else field.set(element, fieldValue);
     }
 
 }
