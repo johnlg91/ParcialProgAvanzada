@@ -34,4 +34,12 @@ public class Acciones {
         db.add(op);
     }
 
+    public void comprar(Producto product, Deposito deposito, Usuario usuario, int cantidad) {
+        DataBase db = DataBase.getInstance();
+        Operacion op = new Operacion(usuario, LocalDate.now(), deposito, product, cantidad);
+        Stock desde = db.getStock(deposito, product);
+        desde.setCantidad(desde.getCantidad() + cantidad);
+        db.add(op);
+    }
+
 }

@@ -11,6 +11,8 @@ public class Operacion implements Serializable {
     private final Producto producto;
     private final int cantidad;
 
+    private final TipoOperacion tipo;
+
     public Operacion(Usuario usuario, LocalDate fecha, Ubicacion origen, Ubicacion destino, Producto producto, int cantidad) {
         assert usuario != null && fecha != null && origen != null && destino != null && producto != null;
         this.usuario = usuario;
@@ -19,20 +21,19 @@ public class Operacion implements Serializable {
         this.destino = destino;
         this.producto = producto;
         this.cantidad = cantidad;
+        this.tipo = origen instanceof Deposito && destino instanceof Deposito ? TipoOperacion.TRANSFERENCIA_DEPOSITOS
+                : TipoOperacion.TRANSFERENCIA_TIENDA;
     }
 
-    public Operacion(Usuario usuario, LocalDate fecha, Tienda tienda, Producto producto, int cantidad) {
-        assert usuario != null && fecha != null && tienda != null && producto != null;
+    public Operacion(Usuario usuario, LocalDate fecha, Ubicacion ubicacion, Producto producto, int cantidad) {
+        assert usuario != null && fecha != null && ubicacion != null && producto != null;
         this.usuario = usuario;
         this.fecha = fecha;
-        this.origen = tienda;
+        this.origen = ubicacion;
         this.destino = null;
         this.producto = producto;
         this.cantidad = cantidad;
-    }
-
-    public boolean isVenta() {
-        return destino == null;
+        this.tipo = ubicacion instanceof Tienda ? TipoOperacion.VENTA : TipoOperacion.COMPRA;
     }
 
     public Usuario getUsuario() {
@@ -57,6 +58,9 @@ public class Operacion implements Serializable {
 
     public int getCantidad() {
         return cantidad;
+    }
+    public TipoOperacion getTipo() {
+        return tipo;
     }
 
 }
