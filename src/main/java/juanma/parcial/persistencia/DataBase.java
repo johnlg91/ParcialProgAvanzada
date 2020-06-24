@@ -167,5 +167,9 @@ public class DataBase {
     public Tienda getTienda(String idTienda) {
         return tiendas.get(idTienda);
     }
+
+    public List<Operacion> getOperaciones() {
+        return historial;
+    }
 }
 
