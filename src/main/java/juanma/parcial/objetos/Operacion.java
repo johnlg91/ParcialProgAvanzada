@@ -38,6 +38,31 @@ public class Operacion implements Serializable {
         this.tipo = ubicacion instanceof Tienda ? TipoOperacion.VENTA : TipoOperacion.COMPRA;
     }
 
+    @Override
+    public String toString() {
+        if (destino != null) {
+            return "Operacion{" +
+                    "usuario=" + usuario.toString() +
+                    ", fecha=" + fecha.toString() +
+                    ", origen=" + origen.getNombre() +
+                    ", destino=" + destino.getNombre() +
+                    ", producto=" + producto.getNombre() +
+                    ", cantidad=" + cantidad +
+                    ", tipo=" + tipo +
+                    '}';
+        }
+        else {
+            return "Operacion{" +
+                    "usuario=" + usuario.toString() +
+                    ", fecha=" + fecha.toString() +
+                    ", origen=" + origen.getNombre() +
+                    ", producto=" + producto.getNombre() +
+                    ", cantidad=" + cantidad +
+                    ", tipo=" + tipo +
+                    '}';
+        }
+    }
+
     //getters
 
     public Usuario getUsuario() {

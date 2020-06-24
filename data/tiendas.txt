@@ -1,0 +1,11 @@
+2
+juanma.parcial.objetos.Tiendas
+=========
+ID:2345
+nombre:toto
+provincia:CORDOBA
+=========
+D:2367
+nombre:pepe
+provincia:CORDOBA
+=========

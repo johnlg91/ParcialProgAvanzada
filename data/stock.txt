@@ -1,0 +1,7 @@
+1
+juanma.parcial.objetos.Stock
+=========
+productoID:1A
+ubicacionID:233
+cantidad:4
+=========

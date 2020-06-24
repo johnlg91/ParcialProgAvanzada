@@ -19,8 +19,10 @@ public class Controller {
         dataBase.loadData(dataDirectory);
     }
     public void stop() {
-        dataBase.loadData(dataDirectory);
+        dataBase.saveData(dataDirectory);
     }
+
+    //finders, usados por los finders en User GUI
     public Producto findProduct(String productId) {
         return dataBase.getProducto(productId);
     }
@@ -32,6 +34,11 @@ public class Controller {
     public Tienda findTienda(String idTienda) {
         return dataBase.getTienda(idTienda);
     }
+
+
+
+
+    // acciones
 
     public void transferir(Producto product, Ubicacion origen, Ubicacion destino, Usuario usuario, int cantidad) {
         Operacion operacion = new Operacion(usuario, LocalDate.now(), origen, destino, product, cantidad);// crea la operacion
