@@ -19,14 +19,12 @@ public class TextPersistence {
     public static final String SEPARATOR = "=========";
 
     static public <T> void writeElements(File file, List<T> elements) {
-        try (
-                PrintWriter writer = new PrintWriter(file) //declaro el writer y le paso el file
-        ) {
-            writer.println(elements.size());
+        try (PrintWriter writer = new PrintWriter(file)) {  //declaro el writer y le paso el file
+            writer.println(elements.size());    //imprime el tamaño de la lista
             if (elements.size() == 0) return;
-            writer.println(elements.get(0).getClass().getName());
+            writer.println(elements.get(0).getClass().getName()); //imprime el nombre de la clase
             writer.println(SEPARATOR);
-            for (T e : elements) {
+            for (T e : elements) { //pide todos los fields de la clase e imprime su nombre y su valor por cada objeto de la lista
                 Class<T> c = (Class<T>) e.getClass();
                 for (Field field : getAllFields(c).values()) {
                     String name = field.getName();
@@ -42,9 +40,7 @@ public class TextPersistence {
 
     }
 
-    /**
-     * Preciso recolectar los fields de las superclases, para poder persistirlos
-     */
+    //devuelve los fields de las superclases, ya q sino pueden llegar a quedar vacios los fields
     private static Map<String, Field> getAllFields(Class<?> clase) {
         Map<String, Field> fields = new TreeMap<>();
         for (Class<?> c = clase; c != null; c = c.getSuperclass()) {
@@ -78,7 +74,7 @@ public class TextPersistence {
     }
 
     private static <T> T readElement(Class<T> clase, BufferedReader reader) throws Exception {
-        T element = clase.newInstance();
+        T element = clase.newInstance(); //usa un constructor vacio para la instancia
         Map<String, Field> fields = getAllFields(clase);
         String line;
         while ((line = reader.readLine()) != null && !line.equals(SEPARATOR)) {
@@ -91,14 +87,15 @@ public class TextPersistence {
     }
 
     @SuppressWarnings("rawtypes")
+    //convierte los strings del archivo al tipo q pide la clase
     private static <T> void setFieldValue(T element, String fieldValue, Field field) throws Exception {
-        Class<?> type = field.getType();
-        if (type == Double.TYPE)
+        Class<?> fieldType = field.getType();
+        if (fieldType == Double.TYPE)
             field.setDouble(element, Double.parseDouble(fieldValue));
-        else if (type == Integer.TYPE)
+        else if (fieldType == Integer.TYPE)
             field.setDouble(element, Integer.parseInt(fieldValue));
-        else if (type.isEnum()) {
-            field.set(element, Enum.valueOf((Class<Enum>) type, fieldValue));
+        else if (fieldType.isEnum()) {
+            field.set(element, Enum.valueOf((Class<Enum>) fieldType, fieldValue));
         } else field.set(element, fieldValue);
     }
 

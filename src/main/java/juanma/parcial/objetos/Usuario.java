@@ -6,6 +6,11 @@ public class Usuario {
     private String nombre;
     private String apellido;
 
+    //constructor vacio usado por el newInstancexz
+    public Usuario(){
+        DNI = ""; nombre = ""; apellido = "";
+    }
+
     public Usuario(String DNI, String nombre, String apellido) {
         this.DNI = DNI;
         this.nombre = nombre;

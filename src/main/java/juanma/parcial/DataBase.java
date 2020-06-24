@@ -44,7 +44,7 @@ public class DataBase {
     }
 
     //para cargar del disco
-
+    //crea un thread por cada loader y los junta al final, el join se queda esperando a que terminen todos los threads juntos
     public void loadData(File dataDirectory) {
         Thread[] threads = {
                 new Thread(() -> loadProductos(dataDirectory)),
@@ -154,16 +154,16 @@ public class DataBase {
         return depositos.get(id);
     }
 
-    public void add(Producto producto) {
+    public void addProducto(Producto producto) {
         productos.put(producto.getSku(), producto);
     }
 
-    public void add(Operacion op) {
-        historial.add(op);
+    public void addHistorial(Operacion operacion) {
+        historial.add(operacion);
     }
 
     public Stock getStock(Ubicacion ubicacion, Producto producto) {
-        return stock.get( ubicacion.getId() + ':' + producto.getSku());
+        return stock.get(ubicacion.getId() + ':' + producto.getSku());
     }
 }
 

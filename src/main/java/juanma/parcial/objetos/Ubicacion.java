@@ -7,10 +7,6 @@ public abstract class Ubicacion {
     protected String nombre;
     protected Provincia provincia;
 
-    public Ubicacion(String nombre) {
-        this.nombre = nombre;
-    }
-
     public Ubicacion(String id, String nombre, Provincia provincia) {
         this.id = id;
         this.nombre = nombre;

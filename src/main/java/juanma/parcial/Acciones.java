@@ -16,30 +16,37 @@ public class Acciones {
         return INSTANCE;
     }
 
+    //manejo de excepciones de stock se manejaran en la gui
+
+    //transferir recibe el producto, las ubicaciones y el usuario, pide la instancia de la base de datos,
+    // y en ella modifica el stock y le agrega la operacional historial
     public void transferir(Producto product, Ubicacion origen, Ubicacion destino, Usuario usuario, int cantidad) {
-        DataBase db = DataBase.getInstance();
-        Operacion op = new Operacion(usuario, LocalDate.now(), origen, destino, product, cantidad);
-        Stock desde = db.getStock(origen, product);
+        DataBase dataBase = DataBase.getInstance();
+        Operacion operacion = new Operacion(usuario, LocalDate.now(), origen, destino, product, cantidad);// crea la operacion
+        Stock desde = dataBase.getStock(origen, product); //pide ambos objetos para fabricar el ID del stock y pedirlo
         desde.setCantidad(desde.getCantidad() - cantidad);
-        Stock hasta = db.getStock(destino, product);
+        Stock hasta = dataBase.getStock(destino, product);
         hasta.setCantidad(hasta.getCantidad() + cantidad);
-        db.add(op);
+        dataBase.addHistorial(operacion); //guarda la operacion en el historial
     }
 
+    //similar a transferir pero solo le quita stock de la tienda
     public void vender(Producto product, Tienda tienda, Usuario usuario, int cantidad) {
-        DataBase db = DataBase.getInstance();
-        Operacion op = new Operacion(usuario, LocalDate.now(), tienda, product, cantidad);
-        Stock desde = db.getStock(tienda, product);
+        DataBase dataBase = DataBase.getInstance();
+        Operacion operacion = new Operacion(usuario, LocalDate.now(), tienda, product, cantidad);
+        Stock desde = dataBase.getStock(tienda, product);
         desde.setCantidad(desde.getCantidad() - cantidad);
-        db.add(op);
+        dataBase.addHistorial(operacion);
     }
 
+    //similar a vender pero agrega en vez de quitar
+    //nesecitaba un metodo para agregar sotck entonces lo agregue
     public void comprar(Producto product, Deposito deposito, Usuario usuario, int cantidad) {
-        DataBase db = DataBase.getInstance();
+        DataBase dataBase = DataBase.getInstance();
         Operacion op = new Operacion(usuario, LocalDate.now(), deposito, product, cantidad);
-        Stock desde = db.getStock(deposito, product);
+        Stock desde = dataBase.getStock(deposito, product);
         desde.setCantidad(desde.getCantidad() + cantidad);
-        db.add(op);
+        dataBase.addHistorial(op);
     }
 
 }

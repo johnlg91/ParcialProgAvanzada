@@ -84,7 +84,7 @@ public class TestPersistence {
         assertEquals(CABA, db.getDeposito("B").getProvincia());
 
         
-        db.add(new Producto("XX", "XBOX", "La ultima Xbox", 1000));
+        db.addProducto(new Producto("XX", "XBOX", "La ultima Xbox", 1000));
         db.saveData(directory);
         db.loadData(directory);
 

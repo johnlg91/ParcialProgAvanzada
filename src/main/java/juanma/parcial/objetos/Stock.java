@@ -12,6 +12,8 @@ public class Stock {
         this.cantidad = cantidad;
     }
 
+
+    //la key es generada por el id de ubicacion y id del producto
     public String getKey() {
         return ubicacionID + ':' + productoID;
     }

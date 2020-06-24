@@ -10,9 +10,9 @@ public class Operacion implements Serializable {
     private final Ubicacion destino;
     private final Producto producto;
     private final int cantidad;
-
     private final TipoOperacion tipo;
 
+    //para transferencias
     public Operacion(Usuario usuario, LocalDate fecha, Ubicacion origen, Ubicacion destino, Producto producto, int cantidad) {
         assert usuario != null && fecha != null && origen != null && destino != null && producto != null;
         this.usuario = usuario;
@@ -21,10 +21,12 @@ public class Operacion implements Serializable {
         this.destino = destino;
         this.producto = producto;
         this.cantidad = cantidad;
+        //se fija q tipo de transferencia es
         this.tipo = origen instanceof Deposito && destino instanceof Deposito ? TipoOperacion.TRANSFERENCIA_DEPOSITOS
                 : TipoOperacion.TRANSFERENCIA_TIENDA;
     }
 
+    // para compras y ventas
     public Operacion(Usuario usuario, LocalDate fecha, Ubicacion ubicacion, Producto producto, int cantidad) {
         assert usuario != null && fecha != null && ubicacion != null && producto != null;
         this.usuario = usuario;
@@ -35,6 +37,8 @@ public class Operacion implements Serializable {
         this.cantidad = cantidad;
         this.tipo = ubicacion instanceof Tienda ? TipoOperacion.VENTA : TipoOperacion.COMPRA;
     }
+
+    //getters
 
     public Usuario getUsuario() {
         return usuario;
@@ -59,6 +63,7 @@ public class Operacion implements Serializable {
     public int getCantidad() {
         return cantidad;
     }
+
     public TipoOperacion getTipo() {
         return tipo;
     }

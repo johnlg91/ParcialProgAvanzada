@@ -5,11 +5,12 @@ import java.io.Serializable;
 @SuppressWarnings("FieldMayBeFinal")
 public class Producto implements Serializable{
 
-    private String sku; //codigo ID
+    private String sku; //codigo ID, stock keeping unit
     private String nombre;
     private String descripcion;
     private double precio;
 
+    //constructor vacio usado por el newInstance
     public Producto() {
         this("", "", "", 0);
     }
