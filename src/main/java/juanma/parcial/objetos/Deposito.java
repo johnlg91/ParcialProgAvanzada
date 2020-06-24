@@ -4,7 +4,7 @@ public class Deposito extends Ubicacion{
 
 
     //constructor vacio usado por el newInstance
-    private Deposito() {
+    public Deposito() {
         this("","", null);
     }
 

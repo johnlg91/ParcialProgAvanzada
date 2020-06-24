@@ -4,7 +4,7 @@ public class Tienda extends Ubicacion{
 
 
     //constructor vacio usado por el newInstance
-    private Tienda() {
+    public Tienda() {
         this("","", null);
     }
 
