@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+//Una simple clase statica con una instancia de Sacnner para facilitarme el manejo de pedir cosas por consola
 public class Scanner {
 
     private static final java.util.Scanner scanner = new java.util.Scanner(System.in);
@@ -11,10 +12,11 @@ public class Scanner {
     private Scanner() {
     }
 
-
+    //Hace un clear en la terminal
     static public void clear() {
         System.out.print("\033[2J\033[H");
     }
+
 
     public static int getInt(String message) {
         System.out.print(message);
@@ -29,6 +31,7 @@ public class Scanner {
     public static char getChar(String message) {
         return getString(message).charAt(0);
     }
+
 
     public static void enter() {
         System.out.print("Enter para continuar.");
@@ -46,6 +49,8 @@ public class Scanner {
         return result;
     }
 
+
+    //Pide fecha en formato d/m/a
     public static LocalDate getDate(String message) {
         System.out.print(message);
         try {

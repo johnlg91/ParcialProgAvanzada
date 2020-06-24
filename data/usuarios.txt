@@ -1,4 +1,4 @@
-2
+3
 juanma.parcial.objetos.Usuario
 =========
 DNI:13
@@ -8,4 +8,8 @@ nombre:Juan
 DNI:13137823
 apellido:Lopez Gabeiras
 nombre:Emilio
+=========
+DNI:40133983
+apellido:Lopez
+nombre:Juan
 =========

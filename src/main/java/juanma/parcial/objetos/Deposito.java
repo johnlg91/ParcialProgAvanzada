@@ -3,7 +3,7 @@ package juanma.parcial.objetos;
 public class Deposito extends Ubicacion{
 
 
-    //constructor vacio usado por el newInstance
+    //Constructor vacio usado por el class.newInstance en el lector de texto
     public Deposito() {
         this("","", null);
     }

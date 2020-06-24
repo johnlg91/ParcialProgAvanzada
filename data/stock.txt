@@ -1,7 +1,7 @@
 7
 juanma.parcial.objetos.Stock
 =========
-cantidad:74
+cantidad:174
 productoID:1A
 ubicacionID:233
 =========

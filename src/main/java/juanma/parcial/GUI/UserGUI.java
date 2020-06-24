@@ -18,12 +18,14 @@ public class UserGUI {
         this.controller = new Controller(dataDirectory);
     }
 
+
+    //Pide el dni al usuario y revisa si ya esta registrado en la data base
     public Usuario pedirDatosUsuario() {
         String dni = Scanner.getString("Ingrese su numero de DNI: ");
         Usuario usuario = controller.findUsuario(dni);
         if (usuario != null) {
             out.println("\t" + usuario.getNombre() + ": " + usuario.getApellido());
-            if (Scanner.getChar("s/n: ") != 'n') return usuario;
+            if (Scanner.getChar("s/n: ") != 'n') return usuario; //Pide la confirmacion del Usuario
         }
         String nombre = Scanner.getString("Ingrese su Nombre: ");
         String apellido = Scanner.getString("Ingrese su Apellido: ");
@@ -32,6 +34,7 @@ public class UserGUI {
         return usuario;
     }
 
+    //Basicamente un switch para recibir los comandos del usuario
     void menu() {
         char cmd;
         do {
@@ -143,7 +146,8 @@ public class UserGUI {
     }
 
 
-//pedidos, piden los datos como el ID de las ubicaciones y devuleve invalido
+    //Pedidos, piden los datos al usuario como el ID de las ubicaciones o productos y cantidades
+    //si el ID q dado es invalido se le imprimiran la lista de lo q hay de ese objeto
 
     private int pedirCantidad() {
         int n = Scanner.getInt("Ingrese la cantidad: ");
@@ -196,6 +200,8 @@ public class UserGUI {
         return tienda;
     }
 
+
+    //Recibe la lista ya filtrada y la imprime en pantalla
     private void report(List<Operacion> reporte) {
         out.printf("%-10s %-20s %-20s %-20s %10s\n", "Fecha", "Producto", "Origen", "Destino", "Cantidad");
         out.println("====================================================================================");
@@ -205,6 +211,9 @@ public class UserGUI {
         out.println();
         Scanner.enter();
     }
+
+
+    //Menus lindos para saber q hacer
 
     void printMenu() {
         Scanner.clear();
@@ -249,6 +258,7 @@ public class UserGUI {
     }
 
 
+    //Para q se llame desde el main y empiece el programa
     public void start() {
         controller.start();
         usuario = pedirDatosUsuario();
