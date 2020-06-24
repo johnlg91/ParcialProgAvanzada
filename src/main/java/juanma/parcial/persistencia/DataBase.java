@@ -1,9 +1,7 @@
-package juanma.parcial;
+package juanma.parcial.persistencia;
 
 
 import juanma.parcial.objetos.*;
-import juanma.parcial.persistencia.BinaryPersistence;
-import juanma.parcial.persistencia.TextPersistence;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -164,6 +162,10 @@ public class DataBase {
 
     public Stock getStock(Ubicacion ubicacion, Producto producto) {
         return stock.get(ubicacion.getId() + ':' + producto.getSku());
+    }
+
+    public Tienda getTienda(String idTienda) {
+        return tiendas.get(idTienda);
     }
 }
 

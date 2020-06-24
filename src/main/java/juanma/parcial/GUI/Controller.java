@@ -1,27 +1,39 @@
-package juanma.parcial;
+package juanma.parcial.GUI;
 
+import juanma.parcial.persistencia.DataBase;
 import juanma.parcial.objetos.*;
 
+import java.io.File;
 import java.time.LocalDate;
 
-public class Acciones {
+public class Controller {
 
-    //constructor privado
-    private Acciones() {
+    private final File dataDirectory;
+    private DataBase dataBase = DataBase.getInstance();
+
+    public Controller(String dataDirectory) {
+        this.dataDirectory = new File(dataDirectory);
+        dataBase = DataBase.getInstance();
+    }
+    public void start() {
+        dataBase.loadData(dataDirectory);
+    }
+    public void stop() {
+        dataBase.loadData(dataDirectory);
+    }
+    public Producto findProduct(String productId) {
+        return dataBase.getProducto(productId);
     }
 
-    private static final Acciones INSTANCE = new Acciones();
-
-    public static Acciones getInstance() {
-        return INSTANCE;
+    public Deposito findDeposito(String id) {
+        return dataBase.getDeposito(id);
     }
 
-    //manejo de excepciones de stock se manejaran en la gui
+    public Tienda findTienda(String idTienda) {
+        return dataBase.getTienda(idTienda);
+    }
 
-    //transferir recibe el producto, las ubicaciones y el usuario, pide la instancia de la base de datos,
-    // y en ella modifica el stock y le agrega la operacional historial
     public void transferir(Producto product, Ubicacion origen, Ubicacion destino, Usuario usuario, int cantidad) {
-        DataBase dataBase = DataBase.getInstance();
         Operacion operacion = new Operacion(usuario, LocalDate.now(), origen, destino, product, cantidad);// crea la operacion
         Stock desde = dataBase.getStock(origen, product); //pide ambos objetos para fabricar el ID del stock y pedirlo
         desde.setCantidad(desde.getCantidad() - cantidad);
@@ -32,7 +44,6 @@ public class Acciones {
 
     //similar a transferir pero solo le quita stock de la tienda
     public void vender(Producto product, Tienda tienda, Usuario usuario, int cantidad) {
-        DataBase dataBase = DataBase.getInstance();
         Operacion operacion = new Operacion(usuario, LocalDate.now(), tienda, product, cantidad);
         Stock desde = dataBase.getStock(tienda, product);
         desde.setCantidad(desde.getCantidad() - cantidad);
@@ -42,11 +53,9 @@ public class Acciones {
     //similar a vender pero agrega en vez de quitar
     //nesecitaba un metodo para agregar sotck entonces lo agregue
     public void comprar(Producto product, Deposito deposito, Usuario usuario, int cantidad) {
-        DataBase dataBase = DataBase.getInstance();
         Operacion op = new Operacion(usuario, LocalDate.now(), deposito, product, cantidad);
         Stock desde = dataBase.getStock(deposito, product);
         desde.setCantidad(desde.getCantidad() + cantidad);
         dataBase.addHistorial(op);
     }
-
 }

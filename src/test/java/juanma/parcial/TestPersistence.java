@@ -1,8 +1,8 @@
 package juanma.parcial;
 
 import juanma.parcial.objetos.Deposito;
-import juanma.parcial.objetos.Provincia;
 import juanma.parcial.persistencia.BinaryPersistence;
+import juanma.parcial.persistencia.DataBase;
 import juanma.parcial.persistencia.TextPersistence;
 import juanma.parcial.objetos.Producto;
 import org.junit.Test;
