@@ -1,6 +1,8 @@
 package juanma.parcial.objetos;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
 
     private String DNI;
     private String nombre;
@@ -20,6 +22,14 @@ public class Usuario {
 
     public String getDNI() {
         return DNI;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
     }
 
     @Override

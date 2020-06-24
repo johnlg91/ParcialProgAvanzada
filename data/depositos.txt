@@ -1,11 +1,11 @@
 2
 juanma.parcial.objetos.Deposito
 =========
-ID:233
+id:233
 nombre:hawai
 provincia:CORDOBA
 =========
-ID:234
+id:234
 nombre:tipi
 provincia:CORDOBA
 =========

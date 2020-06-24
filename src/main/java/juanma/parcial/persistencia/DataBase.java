@@ -4,16 +4,13 @@ package juanma.parcial.persistencia;
 import juanma.parcial.objetos.*;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class DataBase {
 
     //mapas y listas donde se guardan los datos
     //los mapas se guardan con un ID del objeto como key
-    private List<Operacion> historial = new ArrayList<>();
+    private final List<Operacion> historial = new ArrayList<>();
     private final SortedMap<String, Producto> productos = new TreeMap<>();
     private final SortedMap<String, Deposito> depositos = new TreeMap<>();
     private final SortedMap<String, Tienda> tiendas = new TreeMap<>();
@@ -117,7 +114,7 @@ public class DataBase {
     //devuelve los valores del mapa como lista para ser guardados
 
     private void saveProductos(File dataDirectory) {
-        TextPersistence.writeElements(new File(dataDirectory, FILE_PRODUCTOS), new ArrayList<>(tiendas.values()));
+        TextPersistence.writeElements(new File(dataDirectory, FILE_PRODUCTOS), new ArrayList<>(productos.values()));
     }
 
     private void saveDepositos(File dataDirectory) {
@@ -161,7 +158,9 @@ public class DataBase {
     }
 
     public Stock getStock(Ubicacion ubicacion, Producto producto) {
-        return stock.get(ubicacion.getId() + ':' + producto.getSku());
+        String id = ubicacion.getId();
+        String sku = producto.getSku();
+        return stock.computeIfAbsent(id + ':' + sku, k -> new Stock(sku, id, 0));
     }
 
     public Tienda getTienda(String idTienda) {
@@ -170,6 +169,25 @@ public class DataBase {
 
     public List<Operacion> getOperaciones() {
         return historial;
+    }
+
+    public void addUsuario(Usuario usuario) {
+        usuarios.put(usuario.getDNI(), usuario);
+    }
+    public Usuario getUsuario(String dni)
+    {
+        return usuarios.get(dni);
+    }
+
+    public Collection<Producto> getProductos() {
+        return productos.values();
+    }
+
+    public Collection<Deposito> getDepositos() {
+        return depositos.values();
+    }
+    public Collection<Tienda> getTiendas() {
+        return tiendas.values();
     }
 }
 

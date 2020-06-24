@@ -54,12 +54,11 @@ public class Reportes {
                 .getOperaciones()
                 .stream()
                 //Filtra las operaciones de las fechas pedidas
-                .filter(operacion -> operacion.getFecha().isAfter(desde) && operacion.getFecha().isBefore(hasta))
+                .filter(operacion -> operacion.getFecha().isAfter(desde.minusDays(1)) && operacion.getFecha().isBefore(hasta.plusDays(1)))
                 //Filtra las operaciones q vienen de una tienda
-                .filter(operacion -> operacion.getOrigen().equals(tienda))
+                .filter(operacion -> operacion.getOrigen().equals(tienda) || operacion.getDestino().equals(tienda))
+                .limit(10)
                 //Lo pasa a List
-                .collect(Collectors.toList())
-                //Toma los primeros 10
-                .subList(0, 9);
+                .collect(Collectors.toList());
     }
 }

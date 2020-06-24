@@ -81,7 +81,9 @@ public class TextPersistence {
             int dosPuntos = line.indexOf(':'); //devuelve la posicion de ':'
             String fieldName = line.substring(0, dosPuntos);
             String fieldValue = line.substring(dosPuntos + 1);
-            setFieldValue(element, fieldValue, fields.get(fieldName));
+            Field field = fields.get(fieldName);
+            if (field == null) throw new RuntimeException("Illegal Field Name: " + fieldName + " in class " + clase.getName());
+            setFieldValue(element, fieldValue, field);
         }
         return element;
     }
@@ -93,7 +95,7 @@ public class TextPersistence {
         if (fieldType == Double.TYPE)
             field.setDouble(element, Double.parseDouble(fieldValue));
         else if (fieldType == Integer.TYPE)
-            field.setDouble(element, Integer.parseInt(fieldValue));
+            field.setInt(element, Integer.parseInt(fieldValue));
         else if (fieldType.isEnum()) {
             field.set(element, Enum.valueOf((Class<Enum>) fieldType, fieldValue));
         } else field.set(element, fieldValue);

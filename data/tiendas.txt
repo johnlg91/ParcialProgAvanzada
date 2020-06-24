@@ -1,11 +1,11 @@
 2
-juanma.parcial.objetos.Tiendas
+juanma.parcial.objetos.Tienda
 =========
-ID:2345
+id:2345
 nombre:toto
 provincia:CORDOBA
 =========
-D:2367
+id:2367
 nombre:pepe
 provincia:CORDOBA
 =========

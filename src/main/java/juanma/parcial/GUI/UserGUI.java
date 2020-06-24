@@ -3,7 +3,6 @@ package juanma.parcial.GUI;
 import juanma.parcial.objetos.*;
 import juanma.parcial.persistencia.Reportes;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -21,9 +20,16 @@ public class UserGUI {
 
     public Usuario pedirDatosUsuario() {
         String dni = Scanner.getString("Ingrese su numero de DNI: ");
+        Usuario usuario = controller.findUsuario(dni);
+        if (usuario != null) {
+            out.println("\t" + usuario.getNombre() + ": " + usuario.getApellido());
+            if (Scanner.getChar("s/n: ") != 'n') return usuario;
+        }
         String nombre = Scanner.getString("Ingrese su Nombre: ");
         String apellido = Scanner.getString("Ingrese su Apellido: ");
-        return new Usuario(dni, nombre, apellido);
+        usuario = new Usuario(dni, nombre, apellido);
+        controller.addUsuario(usuario);
+        return usuario;
     }
 
     void menu() {
@@ -70,10 +76,12 @@ public class UserGUI {
                     int cantidad = pedirCantidad();
                     controller.comprar(p, deposito, usuario, cantidad);
                     break;
-                }case '6': {
+                }
+                case '6': {
                     reportMenu();
                     break;
                 }
+                case 'q' : break;
                 default:
                     out.println("Commando Invalido.\n");
             }
@@ -92,17 +100,18 @@ public class UserGUI {
                     break;
                 }
                 case '2': {
-                    report(Reportes.destinosConMasDeTres(pedirFecha()));
+                    report(Reportes.destinosConMasDeTres(Scanner.getDate("")));
                     break;
                 }
                 case '3': {
                     report(Reportes.operacionesPorTiendaEntreFechas(
                             pedirTienda(),
-                            pedirFecha(),
-                            pedirFecha()
+                            Scanner.getDate("Fecha desde: "),
+                            Scanner.getDate("Fecha hasta: ")
                     ));
                     break;
                 }
+                case 'q' : break;
                 default:
                     out.println("Commando Invalido.\n");
             }
@@ -125,6 +134,7 @@ public class UserGUI {
                     return TipoOperacion.VENTA;
                 case '4':
                     return TipoOperacion.COMPRA;
+                case 'q' : break;
                 default:
                     out.println("Commando Invalido.\n");
             }
@@ -148,7 +158,10 @@ public class UserGUI {
         String productId = Scanner.getString("Producto a transferir: ");
         Producto product = controller.findProduct(productId);
         if (product == null) {
-            out.println("\tProducto Invalido.");
+            out.println("\tProducto Invalido. Ingrese alguno de los indicados:");
+            for (Producto p : controller.getProductos())
+                out.println("\t\t" + p);
+            out.println();
             return pedirProducto();
         }
         out.println("\t" + product.getNombre() + ": " + product.getDescripcion());
@@ -159,7 +172,10 @@ public class UserGUI {
         String idDeposito = Scanner.getString(titulo);
         Deposito deposito = controller.findDeposito(idDeposito);
         if (deposito == null) {
-            out.println("\tDeposito Invalido.");
+            out.println("\tDeposito Invalido. Ingrese alguno de los indicados:");
+            for (Deposito d : controller.getDepositos())
+                out.println("\t\t" + d);
+            out.println();
             return pedirDeposito(titulo);
         }
         out.println("\t" + deposito.getNombre());
@@ -170,23 +186,24 @@ public class UserGUI {
         String idTienda = Scanner.getString("Ingrese la tienda: ");
         Tienda tienda = controller.findTienda(idTienda);
         if (tienda == null) {
-            out.println("\tTienda Invalida.");
+            out.println("\tTienda Invalida. Ingrese alguna de las indicadas: ");
+            for (Tienda t : controller.getTiendas())
+                out.println("\t\t" + t);
+            out.println();
             return pedirTienda();
         }
         out.println("\t" + tienda.getNombre());
         return tienda;
     }
 
-    private LocalDate pedirFecha() {
-        return LocalDate.of(Scanner.getInt("Introduzca el año"),
-                Scanner.getInt("Introduzca el mes"),
-                Scanner.getInt("Introduzca el día"));
-    }
-
     private void report(List<Operacion> reporte) {
+        out.printf("%-10s %-20s %-20s %-20s %10s\n", "Fecha", "Producto", "Origen", "Destino", "Cantidad");
+        out.println("====================================================================================");
         for (Operacion o : reporte) {
-            out.println(o.toString());
+            out.printf("%10s %-20s %-20s %-20s %10d\n", o.getFecha(), o.getProducto(), o.getOrigen(), o.getDestino(), o.getCantidad());
         }
+        out.println();
+        Scanner.enter();
     }
 
     void printMenu() {
@@ -200,7 +217,7 @@ public class UserGUI {
         out.println("= 3 - Realizar una transferencia desde tienda    =");
         out.println("= 4 - Realizar una venta                         =");
         out.println("= 5 - Realizar una compra                        =");
-        out.println("= 6 - Rreportes                                  =");
+        out.println("= 6 - Reportes                                   =");
         out.println("==================================================");
         out.println();
     }

@@ -5,6 +5,7 @@ import juanma.parcial.objetos.*;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Collection;
 
 public class Controller {
 
@@ -64,5 +65,24 @@ public class Controller {
         Stock desde = dataBase.getStock(deposito, product);
         desde.setCantidad(desde.getCantidad() + cantidad);
         dataBase.addHistorial(op);
+    }
+
+    public void addUsuario(Usuario usuario) {
+        dataBase.addUsuario(usuario);
+    }
+
+    public Usuario findUsuario(String dni) {
+        return dataBase.getUsuario(dni);
+    }
+
+    public Collection<Producto> getProductos() {
+        return dataBase.getProductos();
+    }
+
+    public Collection<Deposito> getDepositos() {
+        return dataBase.getDepositos();
+    }
+    public Collection<Tienda> getTiendas() {
+        return dataBase.getTiendas();
     }
 }

@@ -1,7 +1,9 @@
 package juanma.parcial.objetos;
 
 
-public abstract class Ubicacion {
+import java.io.Serializable;
+
+public abstract class Ubicacion implements Serializable {
 
     protected String id;
     protected String nombre;
@@ -39,4 +41,10 @@ public abstract class Ubicacion {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return id + ": " + nombre + " (" + provincia + ")";
+    }
+
 }
